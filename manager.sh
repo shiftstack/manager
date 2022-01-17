@@ -33,8 +33,10 @@ for u in ${to_be_removed[@]}; do
 	sed -i "/${u}/d" OWNERS{,_ALIASES}
 done
 
-git add OWNERS{,_ALIASES}
-git commit -m "shiftstack: Update OWNERS"
-git push "$remote" shiftstack_owners
+if [[ $(git status --porcelain) ]]; then
+	git add OWNERS{,_ALIASES}
+	git commit -m "shiftstack: Update OWNERS"
+	git push "$remote" shiftstack_owners
+fi
 
 rm -rf "$tmpdir"

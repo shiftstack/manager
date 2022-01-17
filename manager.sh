@@ -8,6 +8,7 @@ declare -a \
 while getopts 'r:' opt; do
 	case "$opt" in
 		r) to_be_removed+=("$OPTARG") ;;
+		*) exit 64 ;;
 	esac
 done
 shift $((OPTIND-1))
@@ -24,12 +25,12 @@ declare remote='origin'
 git clone "$repository" .
 if [[ $repository =~ github.com.openshift ]]; then
 	remote='shiftstack'
-	git remote add "$remote" ${repository/openshift/${remote}}
+	git remote add "$remote" "${repository/openshift/${remote}}"
 fi
 
 git checkout -b "shiftstack_owners"
 
-for u in ${to_be_removed[@]}; do
+for u in "${to_be_removed[@]}"; do
 	sed -i "/${u}/d" OWNERS*
 done
 

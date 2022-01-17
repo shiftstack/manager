@@ -30,11 +30,11 @@ fi
 git checkout -b "shiftstack_owners"
 
 for u in ${to_be_removed[@]}; do
-	sed -i "/${u}/d" OWNERS{,_ALIASES}
+	sed -i "/${u}/d" OWNERS*
 done
 
 if [[ $(git status --porcelain) ]]; then
-	git add OWNERS{,_ALIASES}
+	git add OWNERS*
 	git commit -m "shiftstack: Update OWNERS"
 	git push "$remote" shiftstack_owners
 fi

@@ -23,8 +23,8 @@ More useful when performed on many repositories.
 
 ```shell
 for repository in one two three; do
-	./manager.sh -r github_handle1 -r github_handle2 git@github.com:owner/${repository}.git 2>&1 | tee logs.txt | grep 'https://github.com'
-done
+	./manager.sh -r github_handle1 -r github_handle2 git@github.com:owner/${repository}.git 2>&1
+done | tee logs.txt | grep 'https://github.com'
 ```
 
 then click on each link to create a pull request.

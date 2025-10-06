@@ -21,9 +21,15 @@ readonly tmpdir
 
 cd "$tmpdir"
 
+info() {
+	>&2 printf '%s: %s\n' "$(date --utc +%Y-%m-%dT%H:%M:%SZ)" "$*"
+}
+
+info "Processing ${repository}"
 declare remote='origin'
 git clone "$repository" .
 if [[ $repository =~ github.com.openshift ]]; then
+	info "Setting '${repository/openshift/${remote}}' as the push remote"
 	remote='shiftstack'
 	git remote add "$remote" "${repository/openshift/${remote}}"
 fi
@@ -35,9 +41,12 @@ for u in "${to_be_removed[@]}"; do
 done
 
 if [[ $(git status --porcelain) ]]; then
+	info 'Pushing the change'
 	git add ./*OWNERS*
 	git commit -m "shiftstack: Update OWNERS"
-	git push "$remote" shiftstack_owners
+	git push "$remote" shiftstack_owners --force
+else
+	info 'No change to make'
 fi
 
 rm -rf "$tmpdir"

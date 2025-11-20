@@ -43,7 +43,7 @@ done
 if [[ $(git status --porcelain) ]]; then
 	info 'Pushing the change'
 	git add ./*OWNERS*
-	git commit -m "shiftstack: Update OWNERS"
+	git commit -m "NO-JIRA: Update ShiftStack OWNERS"
 	git push "$remote" shiftstack_owners --force
 else
 	info 'No change to make'
